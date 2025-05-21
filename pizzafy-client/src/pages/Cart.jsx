@@ -1,14 +1,17 @@
 import { UseCart } from "../context/CartContext";
 import { CHECKOUT, HOME } from "../utils/const";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Cart() {
+
+  const navigate = useNavigate()
+
   const {
     cartItems,
     totalPrice,
-    removeFormCart,
+    removeFromCart,
     increaseQuantity,
-    deincreaseQuantity,
+    decreaseQuantity,
   } = UseCart();
 
   function handleCheckOut() {
@@ -16,7 +19,7 @@ function Cart() {
       alert("your's backet is empty! please add some items");
       return;
     }
-    Navigate(CHECKOUT);
+    navigate(CHECKOUT);
   }
 
   return (
@@ -68,20 +71,20 @@ function Cart() {
                       <td>{item.price.toLocaleString()} &#8376;</td>
                       <td>
                         <div className="counter">
-                          <button className="circle" onClick={()=> deincreaseQuantity(item.id)} disabled={item.quantity <= 1}>-</button>
+                          <button className="circle" onClick={()=> decreaseQuantity(item.id)} disabled={item.quantity <= 1}>-</button>
                           <span>{item.quantity}</span>
-                          <button className="circle" onClick={() => increaseQuantity(item.deincreaseQuantity)}>+</button>
+                          <button className="circle" onClick={() => increaseQuantity(item.id)}>+</button>
                         </div>
                       </td>
-                      <td>{item.price.toLocaleString()} &#8376;</td>
+                      <td>{(item.price * item.quantity).toLocaleString()} &#8376;</td>
                       <td>
-                        <button className="delete-btn" onClick={() => removeFormCart(item.id)}>Удалить</button>
+                        <button className="delete-btn" onClick={() => removeFromCart(item.id)}>Удалить</button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <h3 className="total-price">Итого: 1234 &#8376;</h3>
+              <h3 className="total-price">Итого: {totalPrice.toLocaleString()} &#8376;</h3>
               <div className="cart-action">
                 <button onClick={handleCheckOut} className="cart-action__btn">
                   Оформление заказа

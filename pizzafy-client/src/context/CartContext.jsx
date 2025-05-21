@@ -55,7 +55,7 @@ export function CartProvider({ children }) {
     );
   }
 
-  function deincreaseQuantity(productId) {
+  function decreaseQuantity(productId) {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
         item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
@@ -81,7 +81,7 @@ export function CartProvider({ children }) {
     addToCart,
     removeFromCart,
     increaseQuantity,
-    deincreaseQuantity,
+    decreaseQuantity,
     clearCart,
     totalQuantity,
     totalPrice
